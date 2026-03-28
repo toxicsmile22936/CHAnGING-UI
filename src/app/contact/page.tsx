@@ -82,7 +82,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className={`${shellClass} pb-8`}>
+      <section id="start" className={`${shellClass} pb-8`}>
         <div className="grid gap-5 lg:grid-cols-12">
           <aside className="space-y-4 lg:col-span-4">
             <div className="rounded-3xl border border-[#dbe3ff] bg-white/82 p-5 shadow-[0_12px_30px_rgba(176,191,244,0.12)]">
@@ -213,6 +213,53 @@ export default function ContactPage() {
                 </p>
               </div>
             </form>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${shellClass} pb-2`}>
+        <div className="contact-scenery relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/62 p-6 shadow-[0_18px_46px_rgba(171,188,242,0.16)] backdrop-blur-[3px] md:p-10 md:backdrop-blur-sm">
+          <div className="contact-scenery-bg pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="contact-scenery-sky" />
+            <div className="contact-scenery-horizon" />
+            <div className="contact-scenery-lines" />
+            <div className="contact-scenery-grain" />
+          </div>
+
+          <div className="relative z-[2] grid items-end gap-6 md:grid-cols-12 md:gap-10">
+            <div className="md:col-span-6">
+              <p className="inline-flex items-center gap-2 rounded-full border border-[#d4ddff] bg-white/82 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[#6574ad] uppercase">
+                Next steps
+              </p>
+              <h2 className="contact-hero-title contact-premium-title mt-4 text-3xl leading-[1.04] text-[#1f2856] sm:text-4xl">
+                A calm close to a strong start.
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#4b5789] sm:text-base">
+                Once you submit, we review scope and reply with direction, timeline alignment, and investment guidance.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <a
+                  href="#start"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#bfd0ff] bg-white/88 px-5 py-2.5 text-sm font-semibold tracking-[0.01em] text-[#2f3a6a] backdrop-blur-[2px] transition hover:shadow-[0_10px_20px_rgba(176,191,244,0.18)]"
+                >
+                  Refine the brief <ArrowUpRight className="size-4" />
+                </a>
+                <a
+                  href="mailto:contact@eomeg.in"
+                  className="rounded-full px-4 py-2 text-sm font-semibold text-[#3a4680] transition hover:bg-white/65"
+                >
+                  contact@eomeg.in
+                </a>
+              </div>
+            </div>
+
+            <div className="md:col-span-6">
+              <div className="relative h-[260px] w-full sm:h-[300px]">
+                <div className="contact-scenery-orbs contact-hero-art absolute right-[-22px] bottom-[-22px] h-[320px] w-[420px]" aria-hidden="true">
+                  <ContactHeroOrbs />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
