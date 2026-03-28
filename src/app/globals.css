@@ -1452,6 +1452,10 @@ nextjs-portal { display: none !important; }
   text-shadow: none;
 }
 
+.contact-hero-keep {
+  white-space: nowrap;
+}
+
 .contact-hero-wrap {
   isolation: isolate;
 }
@@ -1614,6 +1618,10 @@ nextjs-portal { display: none !important; }
 }
 
 @media (max-width: 767px) {
+  .contact-hero-keep {
+    white-space: normal;
+  }
+
   .contact-hero-art .hero-grid {
     opacity: 0.22;
     mask-image: radial-gradient(circle at 48% 28%, black 24%, transparent 70%);
