@@ -1437,6 +1437,12 @@ nextjs-portal { display: none !important; }
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
+.contact-hero-title {
+  font-family: var(--font-heading), Georgia, serif;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
 .contact-hero-wrap {
   isolation: isolate;
 }
