@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
+import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { ArrowUpRight, Facebook, Instagram, Linkedin, Mail, Sparkles, Youtube } from "lucide-react";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
@@ -11,9 +12,21 @@ export const metadata: Metadata = {
 
 const shellClass = "mx-auto w-[min(1120px,calc(100%-1.5rem))] sm:w-[min(1120px,calc(100%-2.5rem))]";
 
+const premiumDisplay = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-contact-display",
+});
+
+const premiumBody = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-contact-body",
+});
+
 export default function ContactPage() {
   return (
-    <main className="relative overflow-x-clip pb-16 text-[#1f2a44]">
+    <main className={`relative overflow-x-clip pb-16 text-[#1f2a44] ${premiumDisplay.variable} ${premiumBody.variable} font-[var(--font-contact-body)]`}>
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute top-[-5rem] left-[-4rem] hidden h-52 w-52 rounded-full bg-[#e8e0ff]/60 blur-3xl sm:block" />
         <div className="absolute top-[26%] right-[-4rem] hidden h-56 w-56 rounded-full bg-[#dceeff]/55 blur-3xl sm:block" />
@@ -22,10 +35,10 @@ export default function ContactPage() {
 
       <header className={`${shellClass} sticky top-3 z-20 mt-4`}>
         <div className="flex items-center justify-between gap-4 rounded-full border border-white/70 bg-white/72 px-4 py-2 backdrop-blur-[4px] md:px-5 md:backdrop-blur-sm">
-          <Link href="/" className="font-[var(--font-heading)] text-lg font-bold tracking-tight text-[#2f365d]">
+          <Link href="/" className="font-[var(--font-contact-display)] text-[1.65rem] leading-none font-semibold tracking-[-0.02em] text-[#2f365d]">
             Eomeg<span className="text-[#9b8dff]">.</span>
           </Link>
-          <nav className="hidden items-center gap-1 text-sm text-[#3d4876] sm:flex">
+          <nav className="hidden items-center gap-1 text-sm font-medium text-[#3d4876] sm:flex">
             <Link href="/services" className="rounded-full px-3 py-1.5 transition hover:bg-[#e9eeff]">
               Services
             </Link>
@@ -38,7 +51,7 @@ export default function ContactPage() {
           </nav>
           <a
             href="mailto:hello@aetherstudio.co"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#cfd8ff] bg-white/84 px-3 py-1.5 text-xs font-semibold text-[#39457a] backdrop-blur-[2px] md:text-sm"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#cfd8ff] bg-white/84 px-3 py-1.5 text-xs font-semibold tracking-[0.01em] text-[#39457a] backdrop-blur-[2px] md:text-sm"
           >
             <Mail className="size-3.5" />
             hello@aetherstudio.co
@@ -47,17 +60,61 @@ export default function ContactPage() {
       </header>
 
       <section className={`${shellClass} pt-10 pb-8 sm:pt-14`}>
-        <div className="rounded-[2rem] border border-white/75 bg-white/68 p-6 shadow-[0_18px_46px_rgba(171,188,242,0.18)] backdrop-blur-[3px] md:p-10 md:backdrop-blur-sm">
-          <p className="inline-flex items-center gap-2 rounded-full border border-[#d4ddff] bg-white/86 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[#6574ad] uppercase">
-            <Sparkles className="size-3.5" />
-            Start a Project
-          </p>
-          <h1 className="mt-4 max-w-4xl font-[var(--font-heading)] text-4xl leading-tight text-[#1f2856] sm:text-5xl md:text-6xl">
-            Premium inquiry for focused, high-impact creative work.
-          </h1>
-          <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#4b5789] sm:text-lg">
-            Share your project intent and constraints. You will receive scope direction, investment guidance, and the best-fit service path.
-          </p>
+        <div className="contact-hero-wrap relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/68 p-6 shadow-[0_18px_46px_rgba(171,188,242,0.18)] backdrop-blur-[3px] md:p-10 md:backdrop-blur-sm">
+          <div className="contact-hero-art pointer-events-none absolute inset-0" aria-hidden>
+            <div className="hero-grid" />
+            <div className="hero-glow hero-glow-a" />
+            <div className="hero-glow hero-glow-b" />
+            <div className="hero-arc hero-arc-a" />
+            <div className="hero-arc hero-arc-b" />
+          </div>
+
+          <div className="relative z-[2] md:pr-[19rem]">
+            <p className="inline-flex items-center gap-2 rounded-full border border-[#d4ddff] bg-white/86 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[#6574ad] uppercase">
+              <Sparkles className="size-3.5" />
+              Start a Project
+            </p>
+            <h1 className="contact-premium-title mt-4 max-w-4xl font-[var(--font-contact-display)] text-5xl leading-[0.95] font-semibold tracking-[-0.02em] text-[#1f2856] sm:text-6xl md:text-[4.8rem]">
+              Premium inquiry for focused, high-impact creative work.
+            </h1>
+            <p className="mt-5 max-w-3xl text-[1.02rem] leading-relaxed font-medium text-[#4b5789] sm:text-lg">
+              Share your project intent and constraints. You will receive scope direction, investment guidance, and the best-fit service path.
+            </p>
+            <div className="mt-6 flex items-center gap-2.5 md:hidden">
+              <SocialOrb className="orb orb-sm orb-instagram orb-inline">
+                <Instagram className="size-4" />
+              </SocialOrb>
+              <SocialOrb className="orb orb-sm orb-x orb-inline">
+                <span className="text-sm font-bold leading-none">X</span>
+              </SocialOrb>
+              <SocialOrb className="orb orb-sm orb-youtube orb-inline">
+                <Youtube className="size-4" />
+              </SocialOrb>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute top-4 right-[-1rem] hidden h-[360px] w-[340px] md:block" aria-hidden>
+            <SocialOrb className="orb orb-lg orb-a orb-instagram">
+              <Instagram className="size-5" />
+            </SocialOrb>
+            <SocialOrb className="orb orb-md orb-b orb-x">
+              <span className="text-sm font-bold leading-none">X</span>
+            </SocialOrb>
+            <SocialOrb className="orb orb-md orb-c orb-facebook">
+              <Facebook className="size-5" />
+            </SocialOrb>
+            <SocialOrb className="orb orb-sm orb-d orb-youtube">
+              <Youtube className="size-[18px]" />
+            </SocialOrb>
+            <SocialOrb className="orb orb-sm orb-e orb-linkedin">
+              <Linkedin className="size-[18px]" />
+            </SocialOrb>
+            <SocialOrb className="orb orb-xs orb-f orb-clear">
+              <span className="text-[11px] font-bold leading-none">Ae</span>
+            </SocialOrb>
+            <span className="orb-ring ring-a" />
+            <span className="orb-ring ring-b" />
+          </div>
         </div>
       </section>
 
@@ -175,7 +232,7 @@ export default function ContactPage() {
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#bfd0ff] bg-white/88 px-5 py-2.5 text-sm font-semibold text-[#2f3a6a] backdrop-blur-[2px] transition hover:shadow-[0_10px_20px_rgba(176,191,244,0.18)]"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#bfd0ff] bg-white/88 px-5 py-2.5 text-sm font-semibold tracking-[0.01em] text-[#2f3a6a] backdrop-blur-[2px] transition hover:shadow-[0_10px_20px_rgba(176,191,244,0.18)]"
                 >
                   Submit Inquiry <ArrowUpRight className="size-4" />
                 </button>
@@ -195,12 +252,265 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <style jsx global>{`
+        .contact-premium-title {
+          text-wrap: balance;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
+        }
+
+        .contact-hero-wrap {
+          isolation: isolate;
+        }
+
+        .contact-hero-art .hero-grid {
+          position: absolute;
+          inset: 0;
+          background-image: linear-gradient(rgba(158, 176, 242, 0.2) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(158, 176, 242, 0.2) 1px, transparent 1px);
+          background-size: 28px 28px;
+          mask-image: radial-gradient(circle at 70% 44%, black 20%, transparent 72%);
+          opacity: 0.35;
+        }
+
+        .contact-hero-art .hero-glow {
+          position: absolute;
+          border-radius: 9999px;
+          filter: blur(26px);
+        }
+
+        .contact-hero-art .hero-glow-a {
+          width: 230px;
+          height: 230px;
+          top: -48px;
+          right: 42px;
+          background: radial-gradient(circle, rgba(255, 132, 200, 0.26), rgba(255, 132, 200, 0));
+        }
+
+        .contact-hero-art .hero-glow-b {
+          width: 210px;
+          height: 210px;
+          bottom: -54px;
+          right: 132px;
+          background: radial-gradient(circle, rgba(96, 165, 250, 0.26), rgba(96, 165, 250, 0));
+        }
+
+        .contact-hero-art .hero-arc {
+          position: absolute;
+          border: 1px solid rgba(183, 199, 248, 0.45);
+          border-radius: 9999px;
+        }
+
+        .contact-hero-art .hero-arc-a {
+          width: 300px;
+          height: 300px;
+          right: 24px;
+          top: -118px;
+        }
+
+        .contact-hero-art .hero-arc-b {
+          width: 210px;
+          height: 210px;
+          right: 172px;
+          top: 112px;
+          border-color: rgba(157, 182, 245, 0.38);
+        }
+
+        .orb {
+          position: absolute;
+          display: grid;
+          place-items: center;
+          border-radius: 9999px;
+          border: 1px solid rgba(255, 255, 255, 0.66);
+          color: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 16px 28px rgba(49, 63, 116, 0.2), inset 0 0 22px rgba(255, 255, 255, 0.12);
+          backdrop-filter: blur(2px);
+          animation: contactOrbFloat 9s ease-in-out infinite;
+          transform: translateZ(0);
+        }
+
+        .orb-inline {
+          position: relative;
+          animation: none;
+        }
+
+        .orb::before {
+          content: "";
+          position: absolute;
+          inset: 12% 14% auto auto;
+          width: 26%;
+          height: 26%;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.55);
+          filter: blur(1px);
+        }
+
+        .orb::after {
+          content: "";
+          position: absolute;
+          inset: auto 18% 14% auto;
+          width: 20%;
+          height: 20%;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.2);
+        }
+
+        .orb-lg {
+          width: 108px;
+          height: 108px;
+        }
+
+        .orb-md {
+          width: 84px;
+          height: 84px;
+        }
+
+        .orb-sm {
+          width: 62px;
+          height: 62px;
+        }
+
+        .orb-xs {
+          width: 44px;
+          height: 44px;
+          font-size: 0.74rem;
+        }
+
+        .orb-instagram {
+          background: radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.4) 14%, #ff6f73 46%, #ff478b 71%, #9957ff 100%);
+        }
+
+        .orb-x {
+          background: radial-gradient(circle at 26% 22%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.35) 12%, #26304a 46%, #141722 100%);
+        }
+
+        .orb-facebook {
+          background: radial-gradient(circle at 28% 22%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.36) 12%, #52a5ff 46%, #2562ff 100%);
+        }
+
+        .orb-youtube {
+          background: radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.34) 14%, #ff6a7a 46%, #ea1f52 100%);
+        }
+
+        .orb-linkedin {
+          background: radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.34) 14%, #57d0ff 46%, #1f87ff 100%);
+        }
+
+        .orb-clear {
+          background: radial-gradient(circle at 26% 24%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.42) 18%, rgba(176, 199, 255, 0.75) 55%, rgba(130, 156, 245, 0.92) 100%);
+        }
+
+        .orb-a {
+          top: 6px;
+          left: 148px;
+          animation-delay: 0s;
+        }
+
+        .orb-b {
+          top: 72px;
+          left: 64px;
+          animation-delay: -1.6s;
+        }
+
+        .orb-c {
+          top: 134px;
+          left: 210px;
+          animation-delay: -0.8s;
+        }
+
+        .orb-d {
+          top: 178px;
+          left: 124px;
+          animation-delay: -2.3s;
+        }
+
+        .orb-e {
+          top: 230px;
+          left: 260px;
+          animation-delay: -1.1s;
+        }
+
+        .orb-f {
+          top: 28px;
+          left: 256px;
+          animation-delay: -2.8s;
+        }
+
+        .orb-ring {
+          position: absolute;
+          border-radius: 9999px;
+          border: 1px solid rgba(168, 188, 246, 0.44);
+          animation: contactOrbSpin 22s linear infinite;
+        }
+
+        .ring-a {
+          width: 232px;
+          height: 232px;
+          top: 32px;
+          left: 52px;
+        }
+
+        .ring-b {
+          width: 140px;
+          height: 140px;
+          top: 198px;
+          left: 162px;
+          animation-duration: 17s;
+          animation-direction: reverse;
+        }
+
+        @keyframes contactOrbFloat {
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        @keyframes contactOrbSpin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        @media (max-width: 767px) {
+          .contact-hero-art .hero-grid {
+            opacity: 0.22;
+            mask-image: radial-gradient(circle at 48% 28%, black 24%, transparent 70%);
+          }
+
+          .contact-hero-art .hero-arc-a,
+          .contact-hero-art .hero-arc-b {
+            display: none;
+          }
+
+          .contact-hero-art .hero-glow-a,
+          .contact-hero-art .hero-glow-b {
+            filter: blur(18px);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .orb,
+          .orb-ring {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
 
 const inputClass =
-  "w-full rounded-xl border border-[#ced8ff] bg-white/92 px-3.5 py-2.5 text-sm text-[#2b3868] outline-none transition focus:border-[#a9baf6] focus:ring-4 focus:ring-[#c2d0ff]/45";
+  "w-full rounded-xl border border-[#ced8ff] bg-gradient-to-b from-white to-[#fbfdff] px-3.5 py-2.5 text-sm text-[#2b3868] outline-none transition placeholder:text-[#98a5cf] focus:border-[#a9baf6] focus:ring-4 focus:ring-[#c2d0ff]/45";
+
+function SocialOrb({ className, children }: { className: string; children: ReactNode }) {
+  return <span className={className}>{children}</span>;
+}
 
 function Field({
   label,
@@ -215,7 +525,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-xs font-semibold tracking-[0.05em] text-[#5e6fa8] uppercase">
+      <label htmlFor={htmlFor} className="mb-1.5 block text-xs font-semibold tracking-[0.06em] text-[#5e6fa8] uppercase">
         {label} {required ? <span className="text-[#8e7de0]">*</span> : null}
       </label>
       {children}
