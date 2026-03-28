@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Facebook, Instagram, Linkedin, Mail, Sparkles, Youtube } from "lucide-react";
+import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
 import type { ReactNode } from "react";
+import { OrbScene } from "@/components/OrbScene";
 
 export const metadata: Metadata = {
   title: "Start a Project | Eomeg Studio",
@@ -48,13 +49,7 @@ export default function ContactPage() {
 
       <section className={`${shellClass} pt-10 pb-8 sm:pt-14`}>
         <div className="contact-hero-wrap relative overflow-hidden rounded-[2rem] border border-white/75 bg-white/68 p-6 shadow-[0_18px_46px_rgba(171,188,242,0.18)] backdrop-blur-[3px] md:p-10 md:backdrop-blur-sm">
-          <div className="contact-hero-art pointer-events-none absolute inset-0" aria-hidden>
-            <div className="hero-grid" />
-            <div className="hero-glow hero-glow-a" />
-            <div className="hero-glow hero-glow-b" />
-            <div className="hero-arc hero-arc-a" />
-            <div className="hero-arc hero-arc-b" />
-          </div>
+          <div className="pointer-events-none absolute inset-0" aria-hidden />
 
           <div className="relative z-[2] md:pr-[19rem]">
             <p className="inline-flex items-center gap-2 rounded-full border border-[#d4ddff] bg-white/86 px-3 py-1 text-xs font-semibold tracking-[0.08em] text-[#6574ad] uppercase">
@@ -73,40 +68,15 @@ export default function ContactPage() {
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#4b5789] sm:text-lg">
               Share your project intent and constraints. You will receive scope direction, investment guidance, and the best-fit service path.
             </p>
-            <div className="mt-6 flex items-center gap-2.5 md:hidden">
-              <SocialOrb className="orb orb-sm orb-instagram orb-inline">
-                <Instagram className="size-4" />
-              </SocialOrb>
-              <SocialOrb className="orb orb-sm orb-x orb-inline">
-                <span className="text-sm font-bold leading-none">X</span>
-              </SocialOrb>
-              <SocialOrb className="orb orb-sm orb-youtube orb-inline">
-                <Youtube className="size-4" />
-              </SocialOrb>
+            <div className="mt-6 md:hidden">
+              <div className="relative h-[220px] w-full">
+                <OrbScene className="absolute right-[-18px] top-[-6px]" />
+              </div>
             </div>
           </div>
 
-          <div className="pointer-events-none absolute top-4 right-[-1rem] hidden h-[360px] w-[340px] md:block" aria-hidden>
-            <SocialOrb className="orb orb-lg orb-a orb-instagram">
-              <Instagram className="size-5" />
-            </SocialOrb>
-            <SocialOrb className="orb orb-md orb-b orb-x">
-              <span className="text-sm font-bold leading-none">X</span>
-            </SocialOrb>
-            <SocialOrb className="orb orb-md orb-c orb-facebook">
-              <Facebook className="size-5" />
-            </SocialOrb>
-            <SocialOrb className="orb orb-sm orb-d orb-youtube">
-              <Youtube className="size-[18px]" />
-            </SocialOrb>
-            <SocialOrb className="orb orb-sm orb-e orb-linkedin">
-              <Linkedin className="size-[18px]" />
-            </SocialOrb>
-            <SocialOrb className="orb orb-xs orb-f orb-clear">
-              <span className="text-[11px] font-bold leading-none">Ae</span>
-            </SocialOrb>
-            <span className="orb-ring ring-a" />
-            <span className="orb-ring ring-b" />
+          <div className="pointer-events-none absolute top-4 right-[-1rem] hidden h-[360px] w-[360px] md:block" aria-hidden>
+            <OrbScene className="absolute right-0 top-0" />
           </div>
         </div>
       </section>
@@ -251,10 +221,6 @@ export default function ContactPage() {
 
 const inputClass =
   "w-full rounded-xl border border-[#ced8ff] bg-gradient-to-b from-white to-[#fbfdff] px-3.5 py-2.5 text-sm text-[#2b3868] outline-none transition placeholder:text-[#98a5cf] focus:border-[#a9baf6] focus:ring-4 focus:ring-[#c2d0ff]/45";
-
-function SocialOrb({ className, children }: { className: string; children?: ReactNode }) {
-  return <span className={className}>{children ?? null}</span>;
-}
 
 function Field({
   label,
