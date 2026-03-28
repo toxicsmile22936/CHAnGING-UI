@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -10,7 +10,23 @@ import {
   useSpring,
   animate,
 } from "framer-motion";
-import { ArrowUpRight, Mail, Play, Sparkles, X, ChevronRight } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  CheckCircle2,
+  ChevronRight,
+  CircleHelp,
+  Mail,
+  Play,
+  Sparkles,
+  X,
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 type Project = {
   id: number;
@@ -142,9 +158,114 @@ const processSteps = [
   { num: "04", title: "Delivery", desc: "Fast turnaround, revisions included, files ready to launch." },
 ];
 
-const marqueeItems = [
-  "Video Editing", "Web Design", "Motion Graphics", "Brand Films",
-  "Creative Direction", "Social Content", "UI/UX Design", "Visual Storytelling",
+const serviceOutcomes = [
+  {
+    value: "+41%",
+    label: "Higher inquiry quality",
+    detail: "Clear service framing attracts buyers with aligned budget and timeline.",
+  },
+  {
+    value: "2.3x",
+    label: "Stronger launch engagement",
+    detail: "Narrative-first edits and landing flow keep attention longer.",
+  },
+  {
+    value: "48h",
+    label: "Feedback turnaround",
+    detail: "Fast revision windows keep momentum without sacrificing craft.",
+  },
+  {
+    value: "Single",
+    label: "Creative partner model",
+    detail: "Strategy, visual direction, and execution stay cohesive from kickoff to delivery.",
+  },
+];
+
+const servicesPreview = [
+  {
+    title: "Launch Film Direction",
+    summary: "Premium story-led edits for product drops, campaigns, and investor updates.",
+    timeline: "7-10 days",
+    investment: "From $900",
+    points: ["Creative treatment", "Cinematic edit + sound mix", "Social cutdowns"],
+  },
+  {
+    title: "Conversion Web Experience",
+    summary: "High-trust portfolio and marketing pages with clear offer flow.",
+    timeline: "10-18 days",
+    investment: "From $1,800",
+    points: ["Homepage architecture", "Mobile-first UI polish", "Copy-aligned CTA structure"],
+  },
+  {
+    title: "Motion Graphics Pack",
+    summary: "Branded motion assets designed for reels, ads, and launch content.",
+    timeline: "5-8 days",
+    investment: "From $650",
+    points: ["Logo and title motion", "Transition system", "Reusable export set"],
+  },
+  {
+    title: "Social Story System",
+    summary: "A repeatable short-form content system built for consistent publishing.",
+    timeline: "Weekly retainer",
+    investment: "From $1,200/mo",
+    points: ["Content rhythm planning", "Batch edit workflow", "Performance review pass"],
+  },
+  {
+    title: "Premium Brand Bundle",
+    summary: "Unified web + film engagement for brands that need one creative direction.",
+    timeline: "3-5 weeks",
+    investment: "From $3,500",
+    points: ["End-to-end concept", "Launch film + site", "Post-launch support window"],
+  },
+];
+
+const investmentGuide = [
+  {
+    tier: "Foundation",
+    fit: "Best for early-stage founders and creators shipping a focused offer.",
+    price: "$900-$1,800",
+    points: ["One core deliverable", "1 revision round", "Launch-ready exports"],
+  },
+  {
+    tier: "Growth",
+    fit: "For brands that need stronger conversion structure and visual consistency.",
+    price: "$1,800-$3,500",
+    points: ["Multi-section scope", "2 revision rounds", "Conversion-focused creative direction"],
+  },
+  {
+    tier: "Flagship",
+    fit: "For campaign launches where site, film, and messaging must feel premium and unified.",
+    price: "$3,500+",
+    points: ["Cross-medium production", "Priority timelines", "Hands-on launch support"],
+  },
+];
+
+const faqs = [
+  {
+    question: "What is included in the project scope before we start?",
+    answer:
+      "Every engagement starts with a clear scope doc covering deliverables, timeline, revision limits, and communication rhythm so both sides know exactly what is being shipped.",
+  },
+  {
+    question: "How do payments work?",
+    answer:
+      "Most projects are split into a booking payment and a final payment before delivery. Longer scopes can be milestone-based to keep cash flow predictable.",
+  },
+  {
+    question: "Do you work on retainers?",
+    answer:
+      "Yes. Retainers are structured around monthly output targets, turnaround windows, and a standing priority queue for your brand's ongoing content needs.",
+  },
+  {
+    question: "How many revisions are included?",
+    answer:
+      "Each package includes defined revision rounds. Extra rounds can be added when needed, but we keep the process focused to protect speed and quality.",
+  },
+  {
+    question: "Can we start with a smaller test project?",
+    answer:
+      "Absolutely. A focused pilot is a common first step and is designed to validate fit, style direction, and workflow before expanding scope.",
+  },
 ];
 
 // Animated counter hook
@@ -222,6 +343,7 @@ function StatCard({ stat }: { stat: typeof stats[0] }) {
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [mouse, setMouse] = useState({ x: -200, y: -200 });
+  const [showCursorGlow, setShowCursorGlow] = useState(false);
   const [filter, setFilter] = useState("All");
   const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const timeouts = useRef<Record<number, number>>({});
@@ -231,7 +353,7 @@ export default function Home() {
 
   const particles = useMemo(
     () =>
-      Array.from({ length: 28 }, (_, idx) => ({
+      Array.from({ length: 18 }, (_, idx) => ({
         id: idx,
         top: `${(idx * 37) % 100}%`,
         left: `${(idx * 23) % 100}%`,
@@ -242,16 +364,22 @@ export default function Home() {
     [],
   );
 
-  // Doubled marquee items for seamless loop
-  const allMarquee = [...marqueeItems, ...marqueeItems];
-
   const categories = ["All", "Film", "Web", "Social"];
   const filtered = filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   useEffect(() => {
+    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (!media.matches) {
+      setShowCursorGlow(false);
+      return;
+    }
+    setShowCursorGlow(true);
     const handlePointer = (event: PointerEvent) => setMouse({ x: event.clientX, y: event.clientY });
     window.addEventListener("pointermove", handlePointer);
-    return () => window.removeEventListener("pointermove", handlePointer);
+    return () => {
+      window.removeEventListener("pointermove", handlePointer);
+      setShowCursorGlow(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -286,11 +414,13 @@ export default function Home() {
       <motion.div className="scroll-progress" style={{ width: progressBar }} />
 
       {/* Custom cursor */}
-      <motion.div
-        className="cursor-glow"
-        animate={{ x: mouse.x - 120, y: mouse.y - 120 }}
-        transition={{ type: "spring", stiffness: 120, damping: 20, mass: 0.15 }}
-      />
+      {showCursorGlow && (
+        <motion.div
+          className="cursor-glow"
+          animate={{ x: mouse.x - 120, y: mouse.y - 120 }}
+          transition={{ type: "spring", stiffness: 120, damping: 20, mass: 0.15 }}
+        />
+      )}
 
       {/* Ambient background */}
       <div className="ambient-bg">
@@ -373,29 +503,31 @@ export default function Home() {
       <header className="site-nav">
         <a href="#home" className="brand">Eomeg<span className="brand-dot">.</span></a>
         <nav>
+          <a href="#services">Services</a>
           <a href="#work">Work</a>
           <a href="#about">About</a>
+          <a href="#faq">FAQ</a>
           <a href="#process">Process</a>
           <a href="#contact">Contact</a>
         </nav>
-        <a href="#contact" className="nav-cta">Hire Me</a>
+        <a href="/contact" className="nav-cta">Hire Me</a>
       </header>
 
-      {/* ── HERO ── */}
+      {/* â”€â”€ HERO â”€â”€ */}
       <section id="home" className="hero section-shell">
         <motion.div style={{ y: heroParallax }} className="hero-content">
           <motion.p
             className="eyebrow"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.55 }}
           >
             <Sparkles size={14} /> Creative Developer & Video Editor
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.06 }}
           >
             Designing websites &amp;{" "}
             <span className="hero-gradient-text">cinematic videos</span> that clients remember.
@@ -404,7 +536,7 @@ export default function Home() {
             className="hero-copy"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.12 }}
           >
             I help brands stand out through immersive web experiences and high-end visual edits
             that drive trust and inquiries.
@@ -413,10 +545,10 @@ export default function Home() {
             className="hero-actions"
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.18 }}
           >
             <a href="#work" className="btn btn-primary">View My Work</a>
-            <a href="#contact" className="btn btn-secondary">
+            <a href="/contact" className="btn btn-secondary">
               Let&apos;s Build Something <ChevronRight size={15} />
             </a>
           </motion.div>
@@ -427,7 +559,7 @@ export default function Home() {
           className="hero-float-card hero-float-card-1"
           initial={{ opacity: 0, x: 60, y: -20 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.6 }}
+          transition={{ duration: 0.85, delay: 0.34 }}
         >
           <span className="float-dot" />
           <div>
@@ -439,9 +571,9 @@ export default function Home() {
           className="hero-float-card hero-float-card-2"
           initial={{ opacity: 0, x: 60, y: 20 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.75 }}
+          transition={{ duration: 0.85, delay: 0.42 }}
         >
-          <span className="float-check">✓</span>
+          <span className="float-check">âœ“</span>
           <div>
             <p className="float-card-title">Available for work</p>
             <p className="float-card-sub">Starting April 2026</p>
@@ -449,25 +581,92 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── MARQUEE TICKER ── */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {allMarquee.map((item, i) => (
-            <span key={i} className="marquee-item">
-              {item} <span className="marquee-dot">✦</span>
+      {/* Service Outcomes */}
+      <section className="section-shell pt-8 md:pt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.45 }}
+          className="rounded-[1.7rem] border border-white/70 bg-white/62 p-5 shadow-[0_18px_48px_rgba(174,191,249,0.18)] backdrop-blur-[4px] md:p-8 md:backdrop-blur-md"
+        >
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3 md:mb-7">
+            <div>
+              <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">Service Outcomes</p>
+              <h2 className="mt-2 text-3xl leading-tight font-medium text-[#1f2856] md:text-4xl">
+                Creative polish that improves business clarity.
+              </h2>
+            </div>
+            <span className="rounded-full border border-[#cfd9ff] bg-white/80 px-3 py-1 text-xs font-semibold text-[#45538a] backdrop-blur-[2px] md:backdrop-blur-sm">
+              Premium execution, measurable direction
             </span>
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {serviceOutcomes.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-2xl border border-[#d9e2ff] bg-white/80 p-4 shadow-[0_10px_24px_rgba(174,191,249,0.12)]"
+              >
+                <p className="text-2xl font-semibold tracking-tight text-[#29366d] md:text-3xl">{item.value}</p>
+                <p className="mt-1 text-sm font-semibold text-[#3f4f85]">{item.label}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#5c6a9d]">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Services Preview */}
+      <section id="services" className="section-shell pt-2">
+        <motion.div
+          className="section-heading"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.45 }}
+        >
+          <p>Services</p>
+          <h2>Services Preview</h2>
+        </motion.div>
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {servicesPreview.map((service, idx) => (
+            <motion.article
+              key={service.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.38, delay: idx * 0.05 }}
+              className="rounded-3xl border border-[#d7e0ff] bg-white/80 p-5 shadow-[0_16px_36px_rgba(176,191,244,0.14)] transition hover:-translate-y-1 hover:shadow-[0_20px_42px_rgba(176,191,244,0.18)]"
+            >
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <span className="rounded-full border border-[#cfd9ff] bg-white/78 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[#4f5e97] uppercase backdrop-blur-[2px] md:backdrop-blur-sm">
+                  {service.timeline}
+                </span>
+                <span className="text-xs font-semibold text-[#6b60c7]">{service.investment}</span>
+              </div>
+              <h3 className="text-xl font-medium tracking-tight text-[#1f2856]">{service.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#566596]">{service.summary}</p>
+              <ul className="mt-4 space-y-2">
+                {service.points.map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-sm text-[#3e4d7f]">
+                    <CheckCircle2 className="mt-[2px] size-4 shrink-0 text-[#7f78e6]" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ── STATS ── */}
+      {/* â”€â”€ STATS â”€â”€ */}
       <section className="section-shell stats-section">
         <div className="stats-grid">
           {stats.map((s) => <StatCard key={s.label} stat={s} />)}
         </div>
       </section>
 
-      {/* ── PORTFOLIO ── */}
+      {/* â”€â”€ PORTFOLIO â”€â”€ */}
       <section id="work" className="section-shell">
         <motion.div
           className="section-heading"
@@ -515,7 +714,7 @@ export default function Home() {
                 >
                   <video
                     ref={(el) => { videoRefs.current[project.id] = el; }}
-                    preload="metadata"
+                    preload="none"
                     poster={project.poster}
                     src={project.video}
                     muted
@@ -545,7 +744,7 @@ export default function Home() {
         </AnimatePresence>
       </section>
 
-      {/* ── ABOUT ── */}
+      {/* â”€â”€ ABOUT â”€â”€ */}
       <section id="about" className="section-shell about-section">
         <motion.div
           className="about-left"
@@ -562,10 +761,10 @@ export default function Home() {
             and technical execution for results that look premium and perform.
           </p>
           <p className="section-copy" style={{ marginTop: "1rem" }}>
-            Whether it&apos;s a launch film, a conversion site, or a full brand identity — I treat
+            Whether it&apos;s a launch film, a conversion site, or a full brand identity â€” I treat
             every project as a story worth telling beautifully.
           </p>
-          <a href="#contact" className="btn btn-primary" style={{ marginTop: "1.8rem" }}>
+          <a href="/contact" className="btn btn-primary" style={{ marginTop: "1.8rem" }}>
             Work With Me
           </a>
         </motion.div>
@@ -586,12 +785,14 @@ export default function Home() {
                   src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80"
                   alt="Creative freelancer portrait"
                   className="about-avatar"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div className="about-card-badges">
-                <span className="badge badge-lavender">✦ UI / UX</span>
-                <span className="badge badge-blue">▶ Film Edit</span>
-                <span className="badge badge-pink">◈ Motion</span>
+                <span className="badge badge-lavender">âœ¦ UI / UX</span>
+                <span className="badge badge-blue">â–¶ Film Edit</span>
+                <span className="badge badge-pink">â—ˆ Motion</span>
               </div>
               <div className="about-card-glow" />
             </div>
@@ -603,7 +804,7 @@ export default function Home() {
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span className="mini-card-emoji">🏆</span>
+            <span className="mini-card-emoji">ðŸ†</span>
             <div>
               <p className="mini-card-title">18 Awards</p>
               <p className="mini-card-sub">& Features</p>
@@ -614,7 +815,7 @@ export default function Home() {
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
           >
-            <span className="mini-card-emoji">⚡</span>
+            <span className="mini-card-emoji">âš¡</span>
             <div>
               <p className="mini-card-title">48h Delivery</p>
               <p className="mini-card-sub">Rush available</p>
@@ -623,7 +824,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── PROCESS ── */}
+      {/* â”€â”€ PROCESS â”€â”€ */}
       <section id="process" className="section-shell">
         <motion.div
           className="section-heading"
@@ -654,18 +855,67 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── REEL STRIP ── */}
+      {/* Investment Guide */}
+      <section id="investment" className="section-shell pt-2">
+        <motion.div
+          className="section-heading"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-120px" }}
+          transition={{ duration: 0.45 }}
+        >
+          <p>Investment</p>
+          <h2>Choose the Right Engagement</h2>
+        </motion.div>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {investmentGuide.map((item, idx) => (
+            <motion.article
+              key={item.tier}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.4, delay: idx * 0.07 }}
+              className={`rounded-3xl border p-5 shadow-[0_16px_34px_rgba(176,191,244,0.14)] ${
+                idx === 1
+                  ? "border-[#a9b7f7] bg-white/84"
+                  : "border-[#d8e1fb] bg-white/78"
+              }`}
+            >
+              <div className="mb-3 flex items-center justify-between gap-2">
+                <p className="text-xl font-medium text-[#1f2856]">{item.tier}</p>
+                {idx === 1 && (
+                  <span className="rounded-full border border-[#cfd9ff] bg-white/80 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-[#4f5e97] uppercase backdrop-blur-[2px] md:backdrop-blur-sm">
+                    Most selected
+                  </span>
+                )}
+              </div>
+              <p className="text-2xl font-semibold tracking-tight text-[#2d3a72]">{item.price}</p>
+              <p className="mt-2 text-sm leading-relaxed text-[#556496]">{item.fit}</p>
+              <ul className="mt-4 space-y-2">
+                {item.points.map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-sm text-[#3f4e80]">
+                    <Check className="mt-0.5 size-4 shrink-0 text-[#7f78e6]" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+          ))}
+        </div>
+      </section>
+
+      {/* â”€â”€ REEL STRIP â”€â”€ */}
       <div className="reel-strip">
         <div className="reel-track">
           {[...projects, ...projects].map((p, i) => (
             <div key={i} className="reel-frame">
-              <img src={p.poster} alt={p.title} />
+              <img src={p.poster} alt={p.title} loading="lazy" decoding="async" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* ── TESTIMONIALS ── */}
+      {/* â”€â”€ TESTIMONIALS â”€â”€ */}
       <section className="section-shell">
         <motion.div
           className="section-heading"
@@ -688,11 +938,11 @@ export default function Home() {
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
               <div className="testimonial-stars">
-                {"★".repeat(item.stars)}
+                {"â˜…".repeat(item.stars)}
               </div>
               <p>&ldquo;{item.quote}&rdquo;</p>
               <footer>
-                <img src={item.avatar} alt={item.author} className="testimonial-avatar" />
+                <img src={item.avatar} alt={item.author} className="testimonial-avatar" loading="lazy" decoding="async" />
                 <div>
                   <strong>{item.author}</strong>
                   <span>{item.role}</span>
@@ -703,7 +953,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CONTACT ── */}
+      {/* FAQ */}
+      <section id="faq" className="section-shell pt-2">
+        <motion.div
+          className="mx-auto max-w-3xl"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.45 }}
+        >
+          <div className="mb-6 text-center">
+            <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">FAQ</p>
+            <h2 className="mt-2 text-3xl leading-tight font-medium text-[#1f2856] md:text-4xl">
+              Buying clarity before kickoff.
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-[#566596] md:text-base">
+              The process is designed to stay transparent on scope, timing, revisions, and investment.
+            </p>
+          </div>
+          <Accordion type="single" collapsible className="space-y-3">
+            {faqs.map((item) => (
+              <AccordionItem
+                key={item.question}
+                value={item.question}
+                className="rounded-2xl border border-[#d7e0ff] bg-white/80 px-4 shadow-[0_12px_28px_rgba(176,191,244,0.12)] backdrop-blur-[2px] md:px-5 md:backdrop-blur-sm"
+              >
+                <AccordionTrigger className="py-5 text-base font-semibold text-[#253365] hover:no-underline">
+                  <span className="flex items-start gap-2">
+                    <CircleHelp className="mt-0.5 size-4 shrink-0 text-[#7f78e6]" />
+                    <span>{item.question}</span>
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-relaxed text-[#556496] md:text-[0.95rem]">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+      </section>
+
+      {/* â”€â”€ CONTACT â”€â”€ */}
       <section id="contact" className="section-shell contact-section">
         <motion.div
           className="contact-copy"
@@ -715,7 +1005,7 @@ export default function Home() {
           <p className="section-kicker">Contact</p>
           <h2>Let&apos;s create something people can&apos;t ignore.</h2>
           <p className="contact-sub">
-            Whether you have a project in mind or just want to explore what&apos;s possible — I&apos;d love to hear from you.
+            Whether you have a project in mind or just want to explore what&apos;s possible â€” I&apos;d love to hear from you.
           </p>
           <a href="mailto:hello@aetherstudio.co" className="contact-email-link">
             <Mail size={16} /> hello@aetherstudio.co
@@ -757,10 +1047,11 @@ export default function Home() {
           <div className="form-field">
             <label htmlFor="service">Service Needed</label>
             <select id="service" name="service">
-              <option>Video Editing</option>
-              <option>Website Design</option>
-              <option>Motion Graphics</option>
-              <option>Full Brand Package</option>
+              <option>Launch Film Direction</option>
+              <option>Conversion Web Experience</option>
+              <option>Motion Graphics Pack</option>
+              <option>Social Story Retainer</option>
+              <option>Premium Brand Bundle</option>
             </select>
           </div>
           <div className="form-field">
@@ -773,27 +1064,96 @@ export default function Home() {
         </motion.form>
       </section>
 
-      {/* ── FOOTER ── */}
+      {/* Final CTA */}
+      <section className="section-shell pt-1">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.45 }}
+          className="rounded-[1.9rem] border border-white/70 bg-gradient-to-br from-white/78 via-[#f6f4ff]/84 to-[#eef6ff]/84 p-6 shadow-[0_18px_48px_rgba(174,191,249,0.2)] backdrop-blur-[4px] md:p-9 md:backdrop-blur-md"
+        >
+          <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">Final CTA</p>
+          <h2 className="mt-2 max-w-2xl text-3xl leading-tight font-medium text-[#1f2856] md:text-4xl">
+            Ready to launch with sharper creative and clearer conversion flow?
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#566596] md:text-base">
+            Share your goal, timeline, and ideal launch date. You will get a direct recommendation on the best-fit service path.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a href="/contact" className="btn btn-primary">
+              Start Your Project <ChevronRight size={15} />
+            </a>
+            <a href="#work" className="btn btn-secondary">
+              Review Selected Work <ArrowUpRight size={14} />
+            </a>
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <span className="rounded-full border border-[#cfd9ff] bg-white/80 px-3 py-1 text-xs font-semibold text-[#4f5e97] backdrop-blur-[2px] md:backdrop-blur-sm">
+              Avg. response under 24h
+            </span>
+            <span className="rounded-full border border-[#cfd9ff] bg-white/80 px-3 py-1 text-xs font-semibold text-[#4f5e97] backdrop-blur-[2px] md:backdrop-blur-sm">
+              Scope + investment guidance included
+            </span>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Footer */}
       <footer className="site-footer">
-        <div className="footer-inner">
-          <div className="footer-brand">
-            <span className="brand">Eomeg<span className="brand-dot">.</span></span>
-            <p>Crafted for standout brands. Available worldwide.</p>
+        <div className="mx-auto w-[min(1120px,calc(100%-2.5rem))] py-10">
+          <div className="grid grid-cols-1 gap-8 border-b border-[#d7e0ff]/70 pb-8 md:grid-cols-4">
+            <div>
+              <span className="brand">Eomeg<span className="brand-dot">.</span></span>
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-[#6672a5]">
+                Crafted for standout brands with premium web and film execution.
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">Navigation</p>
+              <div className="mt-3 space-y-2 text-sm text-[#5a6a9a]">
+                <a href="#services" className="block transition-colors hover:text-[#1f2856]">Services</a>
+                <a href="#work" className="block transition-colors hover:text-[#1f2856]">Work</a>
+                <a href="#investment" className="block transition-colors hover:text-[#1f2856]">Investment</a>
+                <a href="#faq" className="block transition-colors hover:text-[#1f2856]">FAQ</a>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">Professional</p>
+              <div className="mt-3 space-y-2 text-sm text-[#5a6a9a]">
+                <a href="#" className="block transition-colors hover:text-[#1f2856]">LinkedIn</a>
+                <a href="#" className="block transition-colors hover:text-[#1f2856]">Behance</a>
+                <a href="#" className="block transition-colors hover:text-[#1f2856]">Instagram</a>
+                <a href="mailto:hello@aetherstudio.co?subject=Portfolio%20Request" className="block transition-colors hover:text-[#1f2856]">
+                  Portfolio Deck
+                </a>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-semibold tracking-[0.08em] text-[#7785b8] uppercase">Legal</p>
+              <div className="mt-3 space-y-2 text-sm text-[#5a6a9a]">
+                <a href="/privacy" className="block transition-colors hover:text-[#1f2856]">
+                  Privacy Policy
+                </a>
+                <a href="/terms" className="block transition-colors hover:text-[#1f2856]">
+                  Terms of Engagement
+                </a>
+                <a href="/revision-policy" className="block transition-colors hover:text-[#1f2856]">
+                  Revision Policy
+                </a>
+              </div>
+            </div>
           </div>
-          <div className="footer-links">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="#process">Process</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <div className="footer-right">
-            <p>© {new Date().getFullYear()} Eomeg Studio.</p>
-            <a href="#home">Back to top <ArrowUpRight size={13} /></a>
+          <div className="mt-5 flex flex-col gap-3 text-xs text-[#6672a5] sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} Eomeg Studio. All rights reserved.</p>
+            <a href="#home" className="inline-flex items-center gap-1 font-medium text-[#344172] transition-colors hover:text-[#1f2856]">
+              Back to top <ArrowUpRight size={13} />
+            </a>
           </div>
         </div>
       </footer>
 
-      {/* ── VIDEO MODAL ── */}
+      {/* â”€â”€ VIDEO MODAL â”€â”€ */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
@@ -820,7 +1180,7 @@ export default function Home() {
                   <X size={18} />
                 </button>
               </div>
-              <video src={selectedProject.video} controls autoPlay playsInline poster={selectedProject.poster} />
+              <video src={selectedProject.video} controls autoPlay playsInline preload="none" poster={selectedProject.poster} />
               <p className="modal-desc">{selectedProject.description}</p>
             </motion.div>
           </motion.div>
@@ -829,3 +1189,5 @@ export default function Home() {
     </main>
   );
 }
+
+

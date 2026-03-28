@@ -26,6 +26,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+:where(section[id], div[id]) { scroll-margin-top: 7.25rem; }
 
 body {
   margin: 0;
@@ -55,7 +56,7 @@ main.portfolio-page {
 .section-shell {
   width: min(1120px, calc(100% - 2.5rem));
   margin-inline: auto;
-  padding: 6rem 0;
+  padding: clamp(4.3rem, 8vw, 6rem) 0;
   position: relative;
   z-index: 2;
 }
@@ -63,14 +64,14 @@ main.portfolio-page {
 /* ─── NAV ─── */
 .site-nav {
   position: sticky;
-  top: 0.9rem;
+  top: 0.75rem;
   z-index: 30;
   width: min(1120px, calc(100% - 2.5rem));
-  margin: 1.2rem auto 0;
+  margin: 0.85rem auto 0;
   padding: 0.75rem 1.1rem;
   border: 1px solid rgba(170, 184, 247, 0.35);
   background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(14px);
   border-radius: 999px;
   display: flex;
   justify-content: space-between;
@@ -124,10 +125,11 @@ main.portfolio-page {
 
 /* ─── HERO ─── */
 .hero {
-  min-height: 90vh;
+  min-height: 88vh;
   display: grid;
   align-items: center;
   position: relative;
+  padding-top: 0.8rem;
 }
 
 .hero-content { max-width: 760px; }
@@ -311,7 +313,7 @@ main.portfolio-page {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -394,7 +396,7 @@ main.portfolio-page {
   background: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(170, 184, 247, 0.3);
   overflow: hidden;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
   transition: transform 0.36s cubic-bezier(.2,.8,.2,1), box-shadow 0.36s ease;
 }
 
@@ -430,7 +432,6 @@ main.portfolio-page {
   position: absolute;
   inset: 0;
   background: rgba(30, 40, 80, 0.35);
-  backdrop-filter: blur(1px);
   display: grid;
   place-items: center;
   opacity: 0;
@@ -854,7 +855,7 @@ main.portfolio-page {
   background: rgba(255, 255, 255, 0.82);
   border-radius: 1.2rem;
   padding: 1.5rem;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
   box-shadow: 0 12px 40px rgba(180, 200, 255, 0.12);
 }
 
@@ -963,7 +964,7 @@ main.portfolio-page {
   inset: 0;
   z-index: 70;
   background: rgba(235, 240, 255, 0.75);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(10px);
   display: grid;
   place-items: center;
   padding: 1rem;
@@ -1043,7 +1044,7 @@ main.portfolio-page {
 .blob {
   position: absolute;
   border-radius: 999px;
-  filter: blur(60px);
+  filter: blur(54px);
   opacity: 0.5;
   animation: floatBlob 16s ease-in-out infinite;
 }
@@ -1350,11 +1351,13 @@ main.portfolio-page {
 }
 
 @media (max-width: 780px) {
+  :where(section[id], div[id]) { scroll-margin-top: 9.5rem; }
+
   .site-nav {
     border-radius: 1rem;
     flex-direction: column;
     gap: 0.6rem;
-    top: 0.5rem;
+    top: 0.35rem;
     padding: 0.8rem;
   }
 
@@ -1362,7 +1365,7 @@ main.portfolio-page {
 
   .section-shell {
     width: min(1120px, calc(100% - 1.4rem));
-    padding: 4rem 0;
+    padding: 3.5rem 0;
   }
 
   .hero h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); }
@@ -1391,7 +1394,38 @@ main.portfolio-page {
   .about-visual-card { width: 230px; height: 270px; }
   .about-mini-card, .about-mini-card-2 { display: none; }
 
-  .morph-svg, .mograph-stage { display: none; }
+  .morph-svg, .mograph-stage, .blob, .glow-line, .orbit-ring, .geo-shape, .particle { display: none; }
+
+  .contact-form { backdrop-filter: blur(4px); }
+  .video-modal { backdrop-filter: blur(6px); }
+  .project-card, .stat-card { backdrop-filter: blur(4px); }
+}
+
+@media (hover: none) {
+  .btn:hover,
+  .project-card:hover,
+  .stat-card:hover,
+  .process-card:hover,
+  .testimonial-card:hover,
+  .social-pill:hover,
+  .reel-frame:hover,
+  .nav-cta:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .project-card:hover .project-media video { transform: none; }
+  .project-card:hover .project-overlay { opacity: 0; }
+  .project-card:hover .overlay-play-btn { transform: scale(0.85); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Hide Next.js dev indicator portal */
