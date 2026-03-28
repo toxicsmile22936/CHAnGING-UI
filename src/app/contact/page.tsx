@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Mail, Sparkles } from "lucide-react";
+import { ArrowUpRight, Facebook, Instagram, Linkedin, Mail, Sparkles, Youtube } from "lucide-react";
 import type { ReactNode } from "react";
-import { OrbScene } from "@/components/OrbScene";
 
 export const metadata: Metadata = {
   title: "Start a Project | Eomeg Studio",
@@ -70,13 +69,15 @@ export default function ContactPage() {
             </p>
             <div className="mt-6 md:hidden">
               <div className="relative h-[220px] w-full">
-                <OrbScene className="absolute right-[-18px] top-[-6px]" />
+                <div className="contact-hero-art absolute right-[-18px] top-[-6px] h-[260px] w-[360px]" aria-hidden="true">
+                  <ContactHeroOrbs />
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="pointer-events-none absolute top-4 right-[-1rem] hidden h-[360px] w-[360px] md:block" aria-hidden>
-            <OrbScene className="absolute right-0 top-0" />
+          <div className="contact-hero-art pointer-events-none absolute top-4 right-[-1rem] hidden h-[360px] w-[360px] md:block" aria-hidden="true">
+            <ContactHeroOrbs />
           </div>
         </div>
       </section>
@@ -240,5 +241,38 @@ function Field({
       </label>
       {children}
     </div>
+  );
+}
+
+function ContactHeroOrbs() {
+  return (
+    <>
+      <div className="hero-grid" />
+      <div className="hero-glow hero-glow-a" />
+      <div className="hero-glow hero-glow-b" />
+      <div className="hero-arc hero-arc-a" />
+      <div className="hero-arc hero-arc-b" />
+      <div className="orb-ring ring-a" />
+      <div className="orb-ring ring-b" />
+
+      <span className="orb orb-lg orb-instagram orb-a" aria-hidden="true">
+        <Instagram className="size-5" />
+      </span>
+      <span className="orb orb-md orb-x orb-b" aria-hidden="true">
+        <span className="text-[15px] font-bold tracking-[-0.01em]">X</span>
+      </span>
+      <span className="orb orb-md orb-facebook orb-c" aria-hidden="true">
+        <Facebook className="size-5" />
+      </span>
+      <span className="orb orb-sm orb-youtube orb-d" aria-hidden="true">
+        <Youtube className="size-4" />
+      </span>
+      <span className="orb orb-sm orb-linkedin orb-e" aria-hidden="true">
+        <Linkedin className="size-4" />
+      </span>
+      <span className="orb orb-xs orb-clear orb-f" aria-hidden="true">
+        <span className="text-[11px] font-semibold tracking-[-0.02em]">Ae</span>
+      </span>
+    </>
   );
 }
