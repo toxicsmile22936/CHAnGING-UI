@@ -1435,6 +1435,11 @@ nextjs-portal { display: none !important; }
 .contact-premium-title {
   text-wrap: balance;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72);
+  font-size: clamp(2.65rem, 6.4vw, 5.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: #1f2856;
 }
 
 .contact-hero-wrap {

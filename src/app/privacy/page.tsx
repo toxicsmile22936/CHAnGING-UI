@@ -37,10 +37,10 @@ export default function PrivacyPage() {
             Inquiry and client records are retained as long as needed for communication, project history, legal obligations, or active business operations.
           </PolicySection>
           <PolicySection title="Your Rights">
-            You may request access, correction, or deletion of your data by contacting hello@aetherstudio.co.
+            You may request access, correction, or deletion of your data by contacting contact@eomeg.in.
           </PolicySection>
           <PolicySection title="Contact">
-            Questions about privacy can be sent to hello@aetherstudio.co.
+            Questions about privacy can be sent to contact@eomeg.in.
           </PolicySection>
 
           <div className="mt-7 flex flex-wrap gap-3 text-sm">
