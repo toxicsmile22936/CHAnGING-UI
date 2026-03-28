@@ -1443,6 +1443,15 @@ nextjs-portal { display: none !important; }
   font-weight: 600;
 }
 
+.contact-hero-gradient {
+  display: inline-block;
+  background: linear-gradient(90deg, #86a8ff 0%, #b7a3ff 44%, #ffb3dd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
 .contact-hero-wrap {
   isolation: isolate;
 }
