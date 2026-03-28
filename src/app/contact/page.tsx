@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import { ArrowUpRight, Facebook, Instagram, Linkedin, Mail, Sparkles, Youtube } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -12,21 +11,9 @@ export const metadata: Metadata = {
 
 const shellClass = "mx-auto w-[min(1120px,calc(100%-1.5rem))] sm:w-[min(1120px,calc(100%-2.5rem))]";
 
-const premiumDisplay = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-contact-display",
-});
-
-const premiumBody = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-contact-body",
-});
-
 export default function ContactPage() {
   return (
-    <main className={`relative overflow-x-clip pb-16 text-[#1f2a44] ${premiumDisplay.variable} ${premiumBody.variable} font-[var(--font-contact-body)]`}>
+    <main className="relative overflow-x-clip pb-16 text-[#1f2a44]">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute top-[-5rem] left-[-4rem] hidden h-52 w-52 rounded-full bg-[#e8e0ff]/60 blur-3xl sm:block" />
         <div className="absolute top-[26%] right-[-4rem] hidden h-56 w-56 rounded-full bg-[#dceeff]/55 blur-3xl sm:block" />
@@ -35,7 +22,7 @@ export default function ContactPage() {
 
       <header className={`${shellClass} sticky top-3 z-20 mt-4`}>
         <div className="flex items-center justify-between gap-4 rounded-full border border-white/70 bg-white/72 px-4 py-2 backdrop-blur-[4px] md:px-5 md:backdrop-blur-sm">
-          <Link href="/" className="font-[var(--font-contact-display)] text-[1.65rem] leading-none font-semibold tracking-[-0.02em] text-[#2f365d]">
+          <Link href="/" className="font-[var(--font-heading)] text-lg font-bold tracking-tight text-[#2f365d]">
             Eomeg<span className="text-[#9b8dff]">.</span>
           </Link>
           <nav className="hidden items-center gap-1 text-sm font-medium text-[#3d4876] sm:flex">
@@ -74,10 +61,10 @@ export default function ContactPage() {
               <Sparkles className="size-3.5" />
               Start a Project
             </p>
-            <h1 className="contact-premium-title mt-4 max-w-4xl font-[var(--font-contact-display)] text-5xl leading-[0.95] font-semibold tracking-[-0.02em] text-[#1f2856] sm:text-6xl md:text-[4.8rem]">
+            <h1 className="contact-premium-title mt-4 max-w-4xl font-[var(--font-heading)] text-4xl leading-[1.02] font-medium tracking-[-0.02em] text-[#1f2856] sm:text-5xl md:text-6xl">
               Premium inquiry for focused, high-impact creative work.
             </h1>
-            <p className="mt-5 max-w-3xl text-[1.02rem] leading-relaxed font-medium text-[#4b5789] sm:text-lg">
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#4b5789] sm:text-lg">
               Share your project intent and constraints. You will receive scope direction, investment guidance, and the best-fit service path.
             </p>
             <div className="mt-6 flex items-center gap-2.5 md:hidden">
