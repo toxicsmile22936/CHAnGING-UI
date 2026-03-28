@@ -1450,6 +1450,9 @@ nextjs-portal { display: none !important; }
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: none;
+  /* Prevent descenders (like "g") from visually clipping in tight line-heights. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
 .contact-hero-keep {
