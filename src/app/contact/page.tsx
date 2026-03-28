@@ -61,11 +61,8 @@ export default function ContactPage() {
               <Sparkles className="size-3.5" />
               Start a Project
             </p>
-            <h1 className="contact-premium-title mt-4 max-w-4xl font-[var(--font-heading)]">
-              Premium inquiry
-              <br />
-              for focused, high-impact{" "}
-              <span className="hero-gradient-text">creative work</span>.
+            <h1 className="contact-premium-title mt-4 max-w-4xl font-[var(--font-heading)] text-4xl leading-[1.02] font-medium tracking-[-0.02em] text-[#1f2856] sm:text-5xl md:text-6xl">
+              Premium inquiry for focused, high-impact creative work.
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#4b5789] sm:text-lg">
               Share your project intent and constraints. You will receive scope direction, investment guidance, and the best-fit service path.
