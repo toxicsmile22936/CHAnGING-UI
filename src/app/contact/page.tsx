@@ -508,8 +508,8 @@ export default function ContactPage() {
 const inputClass =
   "w-full rounded-xl border border-[#ced8ff] bg-gradient-to-b from-white to-[#fbfdff] px-3.5 py-2.5 text-sm text-[#2b3868] outline-none transition placeholder:text-[#98a5cf] focus:border-[#a9baf6] focus:ring-4 focus:ring-[#c2d0ff]/45";
 
-function SocialOrb({ className, children }: { className: string; children: ReactNode }) {
-  return <span className={className}>{children}</span>;
+function SocialOrb({ className, children }: { className: string; children?: ReactNode }) {
+  return <span className={className}>{children ?? null}</span>;
 }
 
 function Field({
