@@ -62,7 +62,7 @@ export default function ContactPage() {
               Start a Project
             </p>
             <h1 className="contact-hero-title contact-premium-title mt-4 max-w-4xl text-4xl leading-[1.02] tracking-[-0.02em] text-[#1f2856] sm:text-5xl md:text-6xl">
-              Premium inquiry for focused,{" "}
+              Premium inquiry for focused,{"\u00A0"}
               <span className="contact-hero-gradient">high-impact creative</span>{" "}
               work.
             </h1>
